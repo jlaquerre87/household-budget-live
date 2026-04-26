@@ -6,10 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     :root {
-      --bg: #0b1120;
+      --bg: #020617;
       --card: #020617;
       --accent: #38bdf8;
-      --accent-soft: #0f172a;
       --text: #e5e7eb;
       --muted: #9ca3af;
       --danger: #f97373;
@@ -92,9 +91,7 @@
       gap: 18px;
     }
     @media (max-width: 900px) {
-      .layout {
-        grid-template-columns: minmax(0, 1fr);
-      }
+      .layout { grid-template-columns: minmax(0, 1fr); }
     }
     .card {
       background: radial-gradient(circle at top left, rgba(15,23,42,0.9), rgba(15,23,42,0.98));
@@ -135,9 +132,7 @@
       gap: 8px;
     }
     @media (max-width: 800px) {
-      .form-row {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
+      .form-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
     label {
       font-size: 0.7rem;
@@ -228,7 +223,7 @@
     }
     .item-row {
       display: grid;
-      grid-template-columns: minmax(0, 1.6fr) minmax(0, 0.8fr) minmax(0, 0.9fr) auto;
+      grid-template-columns: minmax(0, 1.5fr) minmax(0, 0.7fr) minmax(0, 0.8fr) minmax(0, 0.9fr) auto;
       gap: 6px;
       align-items: center;
       font-size: 0.78rem;
@@ -237,21 +232,14 @@
       background: rgba(15,23,42,0.9);
       border: 1px solid rgba(31,41,55,0.9);
     }
-    @media (max-width: 800px) {
+    @media (max-width: 900px) {
       .item-row {
-        grid-template-columns: minmax(0, 1.4fr) minmax(0, 0.8fr) minmax(0, 0.9fr) auto;
+        grid-template-columns: minmax(0, 1.4fr) minmax(0, 0.7fr) minmax(0, 0.8fr) minmax(0, 0.9fr) auto;
       }
     }
-    .item-label {
-      color: var(--text);
-    }
-    .item-amount {
-      text-align: right;
-      color: #e5e7eb;
-    }
-    .item-person {
-      color: var(--muted);
-    }
+    .item-label { color: var(--text); }
+    .item-amount { text-align: right; color: #e5e7eb; }
+    .item-person { color: var(--muted); }
     .item-type {
       font-size: 0.7rem;
       padding: 2px 8px;
@@ -267,16 +255,18 @@
       color: #fecaca;
       border-color: rgba(248,113,113,0.7);
     }
+    .type-income {
+      color: #bbf7d0;
+      border-color: rgba(34,197,94,0.7);
+    }
     .totals {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 8px;
       font-size: 0.8rem;
     }
-    @media (max-width: 800px) {
-      .totals {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
+    @media (max-width: 900px) {
+      .totals { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
     .total-card {
       border-radius: 10px;
@@ -320,7 +310,7 @@
     <header>
       <div>
         <h1><span class="logo-dot"></span> Household Budget Live</h1>
-        <div class="subtitle">Shared, real-time budget for everyone (flexible categories & items)</div>
+        <div class="subtitle">Shared budget · Justin · Tori · Kody · Monthly view</div>
       </div>
       <div class="pill">
         <span class="pill-dot"></span>
@@ -329,16 +319,16 @@
     </header>
 
     <div class="layout">
-      <!-- Left: Add / configure -->
+      <!-- LEFT: INPUTS -->
       <section class="card">
         <div class="card-header">
           <div class="card-title">
             Add / configure
-            <span class="badge">Flexible layout</span>
+            <span class="badge">Personal · Shared · Frequency</span>
           </div>
         </div>
         <div class="hint">
-          Add categories (e.g., “Income”, “Rent”, “Groceries”) and then add items under each. Everything is shared.
+          Add categories (Income, Shared Bills, Personal, etc.), then add items with frequency. All values are converted to monthly.
         </div>
 
         <!-- Add category -->
@@ -347,20 +337,18 @@
           <div class="form-row">
             <div>
               <label>Category name</label>
-              <input id="categoryNameInput" type="text" placeholder="e.g., Income, Shared Bills, Groceries" />
+              <input id="categoryNameInput" type="text" placeholder="e.g., Income, Shared Bills, Justin Personal" />
             </div>
             <div>
               <label>Category type</label>
               <select id="categoryTypeInput">
-                <option value="general">General</option>
                 <option value="income">Income</option>
-                <option value="fixed">Fixed bills</option>
-                <option value="variable">Variable</option>
+                <option value="expense">Expense</option>
               </select>
             </div>
             <div>
               <label>Notes (optional)</label>
-              <input id="categoryNotesInput" type="text" placeholder="e.g., monthly, weekly, etc." />
+              <input id="categoryNotesInput" type="text" placeholder="e.g., monthly, fixed, etc." />
             </div>
             <div style="display:flex;align-items:flex-end;justify-content:flex-end;">
               <button id="addCategoryBtn" class="btn-primary" type="button">
@@ -389,6 +377,17 @@
               <input id="itemAmountInput" type="number" step="0.01" placeholder="0.00" />
             </div>
             <div>
+              <label>Frequency</label>
+              <select id="itemFrequencySelect">
+                <option value="monthly">Monthly</option>
+                <option value="weekly">Weekly</option>
+                <option value="biweekly">Bi-weekly</option>
+                <option value="quarterly">Quarterly</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row" style="margin-top:6px;">
+            <div>
               <label>Person</label>
               <select id="itemPersonSelect">
                 <option value="Shared">Shared</option>
@@ -397,13 +396,12 @@
                 <option value="Kody">Kody</option>
               </select>
             </div>
-          </div>
-          <div class="form-row" style="margin-top:6px;">
             <div>
               <label>Item type</label>
               <select id="itemTypeSelect">
-                <option value="shared">Shared</option>
-                <option value="personal">Personal</option>
+                <option value="shared">Shared expense</option>
+                <option value="personal">Personal expense</option>
+                <option value="income">Income</option>
               </select>
             </div>
             <div>
@@ -415,45 +413,40 @@
                 + Add item
               </button>
             </div>
-            <div style="display:flex;align-items:flex-end;justify-content:flex-end;">
-              <button id="clearAllBtn" class="btn-ghost btn-danger" type="button">
-                Clear ALL data
-              </button>
-            </div>
+          </div>
+          <div style="margin-top:6px;display:flex;justify-content:flex-end;">
+            <button id="clearAllBtn" class="btn-ghost btn-danger" type="button">
+              Clear ALL data
+            </button>
           </div>
         </div>
 
         <div class="footer-note">
           <span><span class="status-dot"></span>Changes are saved instantly for everyone.</span>
-          <span>Data path: <code style="font-size:0.7rem;">/budget</code> in Realtime Database.</span>
+          <span>Shared expenses are split 33% · 33% · 33%.</span>
         </div>
       </section>
 
-      <!-- Right: Live view -->
+      <!-- RIGHT: LIVE VIEW -->
       <section class="card">
         <div class="card-header">
           <div class="card-title">
             Live budget view
-            <span class="badge">Shared for Justin · Tori · Kody</span>
+            <span class="badge">Monthly equivalents</span>
           </div>
         </div>
         <div class="hint">
-          Everyone sees the same categories and items. Totals update automatically as you add or remove things.
+          All amounts below are converted to monthly based on frequency. Shared expenses are split evenly between Justin, Tori, and Kody.
         </div>
 
-        <div class="categories" id="categoriesContainer">
-          <!-- Filled by JS -->
-        </div>
+        <div class="categories" id="categoriesContainer"></div>
 
-        <div class="totals" id="totalsContainer">
-          <!-- Filled by JS -->
-        </div>
+        <div class="totals" id="totalsContainer"></div>
       </section>
     </div>
   </div>
 
   <script type="module">
-    // Firebase imports (modular v9+)
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
     import {
       getDatabase,
@@ -461,11 +454,9 @@
       push,
       set,
       onValue,
-      remove,
-      update
+      remove
     } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-database.js";
 
-    // Your Firebase config (from you)
     const firebaseConfig = {
       apiKey: "AIzaSyAKFgnWF70Jyk2evc8vVNI9MK1Bmr95FdY",
       authDomain: "database-51139.firebaseapp.com",
@@ -476,14 +467,10 @@
       appId: "1:695107507384:web:4a27344442c17db833d04d"
     };
 
-    // Init Firebase
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
-
-    // Shared root for everything
     const budgetRef = ref(db, "budget");
 
-    // DOM elements
     const categoryNameInput = document.getElementById("categoryNameInput");
     const categoryTypeInput = document.getElementById("categoryTypeInput");
     const categoryNotesInput = document.getElementById("categoryNotesInput");
@@ -492,6 +479,7 @@
     const itemCategorySelect = document.getElementById("itemCategorySelect");
     const itemLabelInput = document.getElementById("itemLabelInput");
     const itemAmountInput = document.getElementById("itemAmountInput");
+    const itemFrequencySelect = document.getElementById("itemFrequencySelect");
     const itemPersonSelect = document.getElementById("itemPersonSelect");
     const itemTypeSelect = document.getElementById("itemTypeSelect");
     const itemNotesInput = document.getElementById("itemNotesInput");
@@ -501,14 +489,10 @@
     const categoriesContainer = document.getElementById("categoriesContainer");
     const totalsContainer = document.getElementById("totalsContainer");
 
-    // Local cache of data
-    let budgetData = {
-      categories: {}
-    };
+    let budgetData = { categories: {} };
 
-    // Helpers
-    function safeNumber(value) {
-      const n = parseFloat(value);
+    function safeNumber(v) {
+      const n = parseFloat(v);
       return isNaN(n) ? 0 : n;
     }
 
@@ -516,33 +500,43 @@
       return "$" + safeNumber(n).toFixed(2);
     }
 
-    // Add category
+    function toMonthly(amount, frequency) {
+      const a = safeNumber(amount);
+      switch (frequency) {
+        case "weekly":
+          return a * 52 / 12;
+        case "biweekly":
+          return a * 26 / 12;
+        case "quarterly":
+          return a / 3;
+        case "monthly":
+        default:
+          return a;
+      }
+    }
+
     addCategoryBtn.addEventListener("click", async () => {
       const name = (categoryNameInput.value || "").trim();
       if (!name) return;
-
-      const type = categoryTypeInput.value || "general";
+      const type = categoryTypeInput.value || "expense";
       const notes = (categoryNotesInput.value || "").trim();
 
       const categoriesRef = ref(db, "budget/categories");
       const newCatRef = push(categoriesRef);
       const id = newCatRef.key;
 
-      const category = {
+      await set(newCatRef, {
         id,
         name,
         type,
         notes,
         createdAt: Date.now()
-      };
-
-      await set(newCatRef, category);
+      });
 
       categoryNameInput.value = "";
       categoryNotesInput.value = "";
     });
 
-    // Add item
     addItemBtn.addEventListener("click", async () => {
       const categoryId = itemCategorySelect.value;
       if (!categoryId) return;
@@ -551,6 +545,7 @@
       if (!label) return;
 
       const amount = safeNumber(itemAmountInput.value);
+      const frequency = itemFrequencySelect.value || "monthly";
       const person = itemPersonSelect.value || "Shared";
       const itemType = itemTypeSelect.value || "shared";
       const notes = (itemNotesInput.value || "").trim();
@@ -559,47 +554,40 @@
       const newItemRef = push(itemsRef);
       const id = newItemRef.key;
 
-      const item = {
+      await set(newItemRef, {
         id,
         label,
         amount,
+        frequency,
         person,
         type: itemType,
         notes,
         createdAt: Date.now()
-      };
-
-      await set(newItemRef, item);
+      });
 
       itemLabelInput.value = "";
       itemAmountInput.value = "";
       itemNotesInput.value = "";
     });
 
-    // Clear all data
     clearAllBtn.addEventListener("click", async () => {
       const sure = confirm("This will delete ALL categories and items for everyone. Continue?");
       if (!sure) return;
       await set(budgetRef, { categories: {} });
     });
 
-    // Remove category
     async function deleteCategory(categoryId) {
       const sure = confirm("Delete this entire category and all its items?");
       if (!sure) return;
-      const catRef = ref(db, `budget/categories/${categoryId}`);
-      await remove(catRef);
+      await remove(ref(db, `budget/categories/${categoryId}`));
     }
 
-    // Remove item
     async function deleteItem(categoryId, itemId) {
       const sure = confirm("Delete this item?");
       if (!sure) return;
-      const itemRef = ref(db, `budget/categories/${categoryId}/items/${itemId}`);
-      await remove(itemRef);
+      await remove(ref(db, `budget/categories/${categoryId}/items/${itemId}`));
     }
 
-    // Live listener
     onValue(budgetRef, (snapshot) => {
       const val = snapshot.val() || {};
       if (!val.categories) val.categories = {};
@@ -607,10 +595,15 @@
       render();
     });
 
+    onValue(budgetRef, (snapshot) => {
+      if (!snapshot.exists()) {
+        set(budgetRef, { categories: {} });
+      }
+    }, { onlyOnce: true });
+
     function render() {
       const categories = budgetData.categories || {};
 
-      // Update category dropdown
       itemCategorySelect.innerHTML = '<option value="">Select category…</option>';
       Object.values(categories)
         .sort((a, b) => (a.createdAt || 0) - (b.createdAt || 0))
@@ -621,12 +614,14 @@
           itemCategorySelect.appendChild(opt);
         });
 
-      // Render categories + items
       categoriesContainer.innerHTML = "";
+
       let totalIncome = 0;
       let totalShared = 0;
       let totalPersonal = 0;
-      const perPerson = { Justin: 0, Tori: 0, Kody: 0 };
+
+      const perPersonPersonal = { Justin: 0, Tori: 0, Kody: 0 };
+      const perPersonIncome = { Justin: 0, Tori: 0, Kody: 0 };
 
       Object.values(categories)
         .sort((a, b) => (a.createdAt || 0) - (b.createdAt || 0))
@@ -641,7 +636,7 @@
           left.innerHTML = `
             <div class="category-name">${cat.name || "Untitled"}</div>
             <div class="category-meta">
-              <span>${cat.type || "general"}</span>
+              <span>${cat.type === "income" ? "Income" : "Expense"}</span>
               ${cat.notes ? `<span>• ${cat.notes}</span>` : ""}
             </div>
           `;
@@ -663,35 +658,45 @@
           itemsDiv.className = "items";
 
           const items = cat.items || {};
-          let categoryTotal = 0;
+          let categoryTotalMonthly = 0;
 
           Object.values(items)
             .sort((a, b) => (a.createdAt || 0) - (b.createdAt || 0))
             .forEach(item => {
-              const row = document.createElement("div");
-              row.className = "item-row";
-
-              const amount = safeNumber(item.amount);
-              categoryTotal += amount;
+              const monthly = toMonthly(item.amount, item.frequency);
+              categoryTotalMonthly += monthly;
 
               if (cat.type === "income" || item.type === "income") {
-                totalIncome += amount;
-              } else if (item.type === "shared") {
-                totalShared += amount;
-              } else if (item.type === "personal") {
-                totalPersonal += amount;
-                if (perPerson[item.person]) {
-                  perPerson[item.person] += amount;
+                totalIncome += monthly;
+                if (perPersonIncome[item.person]) {
+                  perPersonIncome[item.person] += monthly;
+                }
+              } else {
+                if (item.type === "shared") {
+                  totalShared += monthly;
+                } else if (item.type === "personal") {
+                  totalPersonal += monthly;
+                  if (perPersonPersonal[item.person]) {
+                    perPersonPersonal[item.person] += monthly;
+                  }
                 }
               }
 
+              const row = document.createElement("div");
+              row.className = "item-row";
+
+              let typeClass = "type-shared";
+              if (item.type === "personal") typeClass = "type-personal";
+              if (item.type === "income") typeClass = "type-income";
+
               row.innerHTML = `
                 <div class="item-label">${item.label || ""}</div>
-                <div class="item-amount">${formatCurrency(amount)}</div>
+                <div class="item-amount">${formatCurrency(item.amount)}<br><span style="font-size:0.7rem;color:#9ca3af;">${item.frequency}</span></div>
+                <div class="item-amount">${formatCurrency(monthly)}<br><span style="font-size:0.7rem;color:#9ca3af;">monthly</span></div>
                 <div class="item-person">${item.person || "Shared"}</div>
                 <div style="display:flex;align-items:center;gap:6px;justify-content:flex-end;">
-                  <span class="item-type ${item.type === "personal" ? "type-personal" : "type-shared"}">
-                    ${item.type === "personal" ? "Personal" : "Shared"}
+                  <span class="item-type ${typeClass}">
+                    ${item.type === "income" ? "Income" : item.type === "personal" ? "Personal" : "Shared"}
                   </span>
                   <button class="btn-ghost btn-danger" data-cat-id="${cat.id}" data-item-id="${item.id}" style="padding:3px 8px;font-size:0.7rem;">
                     ✕
@@ -707,7 +712,7 @@
             catTotalRow.style.fontSize = "0.75rem";
             catTotalRow.style.color = "#9ca3af";
             catTotalRow.style.marginTop = "4px";
-            catTotalRow.textContent = `Category total: ${formatCurrency(categoryTotal)}`;
+            catTotalRow.textContent = `Category total (monthly): ${formatCurrency(categoryTotalMonthly)}`;
             itemsDiv.appendChild(catTotalRow);
           }
 
@@ -715,22 +720,33 @@
           categoriesContainer.appendChild(catDiv);
         });
 
-      // Totals
-      totalsContainer.innerHTML = "";
+      const sharedPerPerson = totalShared / 3;
+
+      const perPersonTotal = {
+        Justin: perPersonPersonal.Justin + sharedPerPerson,
+        Tori: perPersonPersonal.Tori + sharedPerPerson,
+        Kody: perPersonPersonal.Kody + sharedPerPerson
+      };
 
       const net = totalIncome - (totalShared + totalPersonal);
 
-      const totalCards = [
-        { label: "Total income", value: totalIncome },
-        { label: "Total shared expenses", value: totalShared },
-        { label: "Total personal expenses", value: totalPersonal },
+      totalsContainer.innerHTML = "";
+
+      const cards = [
+        { label: "Total income (monthly)", value: totalIncome },
+        { label: "Total shared expenses (monthly)", value: totalShared },
+        { label: "Total personal expenses (monthly)", value: totalPersonal },
         { label: "Net (income - all expenses)", value: net },
-        { label: "Personal total · Justin", value: perPerson.Justin },
-        { label: "Personal total · Tori", value: perPerson.Tori },
-        { label: "Personal total · Kody", value: perPerson.Kody }
+        { label: "Shared share per person (monthly)", value: sharedPerPerson },
+        { label: "Justin personal (monthly)", value: perPersonPersonal.Justin },
+        { label: "Tori personal (monthly)", value: perPersonPersonal.Tori },
+        { label: "Kody personal (monthly)", value: perPersonPersonal.Kody },
+        { label: "Justin total owed (personal + shared)", value: perPersonTotal.Justin },
+        { label: "Tori total owed (personal + shared)", value: perPersonTotal.Tori },
+        { label: "Kody total owed (personal + shared)", value: perPersonTotal.Kody }
       ];
 
-      totalCards.forEach(t => {
+      cards.forEach(t => {
         const div = document.createElement("div");
         div.className = "total-card";
         div.innerHTML = `
@@ -740,7 +756,6 @@
         totalsContainer.appendChild(div);
       });
 
-      // Wire delete buttons
       categoriesContainer.querySelectorAll("button[data-cat-id][data-item-id]").forEach(btn => {
         btn.addEventListener("click", () => {
           const catId = btn.getAttribute("data-cat-id");
@@ -756,13 +771,6 @@
         });
       });
     }
-
-    // Ensure base structure exists
-    onValue(budgetRef, (snapshot) => {
-      if (!snapshot.exists()) {
-        set(budgetRef, { categories: {} });
-      }
-    }, { onlyOnce: true });
   </script>
 </body>
 </html>
